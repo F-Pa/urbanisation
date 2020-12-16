@@ -10,9 +10,6 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const [util, setUtilisateur] = useState('');
-    const [annonc, setAnnonceur] = useState('');
-
     const [loginError, setLoginError] = useState('');
     const [signupError, setSignupError] = useState('');
 
@@ -22,20 +19,34 @@ const Login = () => {
     function handleSubmit(e) {
       e.preventDefault();
 
-      const userReg = {
-          nom: nom,
-          prenom: prenom,
-          age: age,
-          email: email,
-          password: password
+      let role;
+      if(!document.getElementById("one").checked && !document.getElementById("two").checked){
+        setSignupError('Vous n\'avez pas séléctionné votre role');
       }
+      else {
+        if(document.getElementById("one").checked){
+          role = 'Utilisateur'
+        }
+        else {
+          role = 'Annonceur'
+        }
 
-      setSignupError('');
+        const userReg = {
+            nom: nom,
+            prenom: prenom,
+            age: age,
+            email: email,
+            password: password,
+            role: role
+        }
 
-      axios.post('http://localhost:4000/app/signup', userReg)
-      .catch(function (error) {
-        setSignupError(error.response.data.message);
-      })
+        setSignupError('');
+
+        axios.post('http://localhost:4000/app/signup', userReg)
+        .catch(function (error) {
+          setSignupError(error.response.data.message);
+        })
+      }
 
       setNom('');
       setPrenom('');
@@ -91,7 +102,6 @@ const Login = () => {
                   name='role'
                   id='one'
                   value='Utilisateur'
-                  onChange={(e) => setUtilisateur(true)}
                 />
                 <span>Utilisateur</span>
               </label>
@@ -101,7 +111,6 @@ const Login = () => {
                   name='role'
                   id='two'
                   value='Annonceur'
-                  onChange={(e) => setAnnonceur(true)}
                 />
                 <span>Annonceur</span>
               </label>  
@@ -120,6 +129,8 @@ const Login = () => {
             />
             <input
                 type='number'
+                min = '1'
+                max = '100'
                 placeholder='Age'
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
@@ -155,7 +166,7 @@ const Login = () => {
               value={passwordLogin}
               onChange={(e) => setPasswordlogin(e.target.value)}
             />
-      			<a href="https://reactjs.org">Mot de pass oublié</a>
+      			<a href="https://reactjs.org">Mot de passe oublié</a>
       			<input type='submit' className='bouton-signup' value='Se connecter'/>
             {loginError && <p style={{color: 'red'}}>{loginError}</p>}
       		</form>

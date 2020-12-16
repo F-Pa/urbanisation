@@ -11,7 +11,7 @@ const saltRound = 10;
 router.post('/signup', async(req, res) => {
     
     const securePassword = await bcrypt.hash(req.body.password, saltRound)
-
+    
     try {
         assert.notStrictEqual("", req.body.nom, 'Nom Requis');
         assert.notStrictEqual("", req.body.prenom, 'Prénom Requis');
@@ -27,6 +27,7 @@ router.post('/signup', async(req, res) => {
         nom:req.body.nom,
         prenom:req.body.prenom,
         age:req.body.age,
+        role:req.body.role,
         email:req.body.email,
         password:securePassword,
     })
