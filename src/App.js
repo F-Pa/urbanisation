@@ -1,20 +1,30 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import useToken from './authentification/useToken';
+
 import Login from './Login';
+import Test from './Test';
 
 import './style/App.css';
 
-function App() {
+function App(props) {
+  const { token, setToken } = useToken();
+
+  if(!token) {
+    return <Login setToken={setToken} />
+  }
+
   return (
     <Router>
-      <div className="App">
-        <Switch>
-          <Route path="/" exact component={Home}/>
-          <Route path="/Login" component={Login}/>
-        </Switch>
-      </div>
-    </Router>
+    <div className="App">
+      <Switch>
+        <Route path="/" exact component={Home}/>
+        <Route path="/Login" component={Login}/>
+        <Route path="/Test" component={Test}/>
+      </Switch>
+    </div>
+  </Router>
   );
 }
 

@@ -44,6 +44,7 @@ router.post('/signup', async(req, res) => {
                 .catch(error => {
                     res.json(error)
                 })
+            return res.json({token: 'test2'})
         }
     })
 })
@@ -51,7 +52,7 @@ router.post('/signup', async(req, res) => {
 router.post('/signin', (req, res) => {
     try {
         assert.notStrictEqual("", req.body.emailLogin, 'Email requis');
-        assert.notStrictEqual("", req.body.passwordLogin, 'Mot de pass requis');
+        assert.notStrictEqual("", req.body.passwordLogin, 'Mot de passe requis');
     }
     catch (bodyError) {
         return res.status(403).json({status: 'error', message: bodyError.message});
@@ -66,9 +67,10 @@ router.post('/signin', (req, res) => {
                     if(err) return res.status(500).json({status: 'error', message: 'Authentification échouée'});
                     if(match) {
                         console.log("ok");
+                        return res.json({token :'test'});
                     }
                     else {
-                        res.status(401).json({status: 'error', message: 'L\'email ou le mot de passe n\'existe pas'})
+                        return res.status(401).json({status: 'error', message: 'L\'email ou le mot de passe n\'existe pas'})
                     }
                 })
             })

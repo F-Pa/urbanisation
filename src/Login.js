@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 import './style/signup.css';
 
-const Login = () => {
+const Login = ({ setToken }) => {
     const [nom, setNom] = useState('');
     const [prenom, setPrenom] = useState('');
     const [age, setAge] = useState('');
@@ -43,6 +44,12 @@ const Login = () => {
         setSignupError('');
 
         axios.post('http://localhost:4000/app/signup', userReg)
+        .then(result => {
+          if(result.status === 200) {
+            console.log(result.data);
+            setToken(result.data);
+          }
+        })
         .catch(function (error) {
           setSignupError(error.response.data.message);
         })
@@ -66,12 +73,20 @@ const Login = () => {
       setLoginError('');
 
       axios.post('http://localhost:4000/app/signin', userLog)
-      .catch(function (error) {
-        setLoginError(error.response.data.message);
+      .then(res => {
+        if(res.status === 200) {
+          console.log(res.data);
+          setToken(res.data)
+        }
       })
+      .catch(error => {
+          console.log(error);
+          setLoginError(error.response.data.message);
+      });
 
       setEmaillogin('');
       setPasswordlogin('');
+
     }
 
     function switchLogin(e){
@@ -187,6 +202,10 @@ const Login = () => {
       	</div>
       </div>
     )
+}
+
+Login.propTypes = {
+  setToken: PropTypes.func.isRequired
 }
 
 export default Login
