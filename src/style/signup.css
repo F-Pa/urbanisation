@@ -5,7 +5,7 @@
 	box-sizing: border-box;
 }
 
-body {
+.body-signup {
 	background: #f6f5f7;
 	display: flex;
 	justify-content: center;
@@ -16,12 +16,12 @@ body {
 	margin: -20px 0 50px;
 }
 
-h1 {
+.h1-signup {
 	font-weight: bold;
 	margin: 0;
 }
 
-p {
+.p-signup {
 	font-size: 14px;
 	font-weight: 100;
 	line-height: 20px;
@@ -29,11 +29,11 @@ p {
 	margin: 20px 0 30px;
 }
 
-span {
+.span-signup {
 	font-size: 12px;
 }
 
-a {
+.a-signup {
 	color: #333;
 	font-size: 14px;
 	text-decoration: none;
@@ -92,7 +92,7 @@ button.ghost {
 	border-color: #FFFFFF;
 }
 
-form {
+.form-signup {
 	background-color: #FFFFFF;
 	display: flex;
 	align-items: center;
@@ -103,7 +103,7 @@ form {
 	text-align: center;
 }
 
-input {
+.input-signup {
 	background-color: #eee;
 	border: none;
 	padding: 12px 15px;
@@ -111,7 +111,7 @@ input {
 	width: 100%;
 }
 
-.container {
+.container-signup {
 	background-color: #fff;
 	border-radius: 10px;
   	box-shadow: 0 14px 28px rgba(0,0,0,0.25),
@@ -136,7 +136,7 @@ input {
 	z-index: 2;
 }
 
-.container.right-panel-active .sign-in-container {
+.container-signup.right-panel-active .sign-in-container {
 	transform: translateX(100%);
 }
 
@@ -147,7 +147,7 @@ input {
 	z-index: 1;
 }
 
-.container.right-panel-active .sign-up-container {
+.container-signup.right-panel-active .sign-up-container {
 	transform: translateX(100%);
 	opacity: 1;
 	z-index: 5;
@@ -177,7 +177,7 @@ input {
 	z-index: 100;
 }
 
-.container.right-panel-active .overlay-container{
+.container-signup.right-panel-active .overlay-container{
 	transform: translateX(-100%);
 }
 
@@ -197,7 +197,7 @@ input {
 	transition: transform 0.6s ease-in-out;
 }
 
-.container.right-panel-active .overlay {
+.container-signup.right-panel-active .overlay {
   	transform: translateX(50%);
 }
 
@@ -220,7 +220,7 @@ input {
 	transform: translateX(-20%);
 }
 
-.container.right-panel-active .overlay-left {
+.container-signup.right-panel-active .overlay-left {
 	transform: translateX(0);
 }
 
@@ -229,7 +229,7 @@ input {
 	transform: translateX(0);
 }
 
-.container.right-panel-active .overlay-right {
+.container-signup.right-panel-active .overlay-right {
 	transform: translateX(20%);
 }
 
@@ -278,10 +278,10 @@ footer a {
 	display: block;
 	cursor: pointer;
 }
-.radio input {
+.radio .input-signup {
 	display: none;
 }
-.radio input + span {
+.radio .input-signup + span {
 	font-size: 15px;
 	line-height: 22px;
 	height: 22px;
@@ -289,10 +289,10 @@ footer a {
 	display: block;
 	position: relative;
 }
-.radio input + span:not(:empty) {
+.radio .input-signup + span:not(:empty) {
 	padding-left: 30px;
 }
-.radio input + span:before, .radio input + span:after {
+.radio .input-signup + span:before, .radio .input-signup + span:after {
 	content: '';
 	width: 22px;
 	height: 22px;
@@ -302,40 +302,40 @@ footer a {
 	top: 0;
 	position: absolute;
 }
-.radio input + span:before {
+.radio .input-signup + span:before {
 	background: #d1d7e3;
 	transition: background 0.2s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 2);
 }
-.radio input + span:after {
+.radio .input-signup + span:after {
 	background: #fff;
 	transform: scale(0.78);
 	transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.4);
 }
-.radio input:checked + span:before {
+.radio .input-signup:checked + span:before {
 	transform: scale(1.04);
 	background: #FF4B2B;
 }
-.radio input:checked + span:after {
+.radio .input-signup:checked + span:after {
 	transform: scale(0.4);
 	transition: transform 0.3s ease;
 }
-.radio:hover input + span:before {
+.radio:hover .input-signup + span:before {
 	transform: scale(0.92);
 }
-.radio:hover input + span:after {
+.radio:hover .input-signup + span:after {
 	transform: scale(0.74);
 }
-.radio:hover input:checked + span:after {
+.radio:hover .input-signup:checked + span:after {
 	transform: scale(0.4);
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
+.input-signup::-webkit-outer-spin-button,
+.input-signup::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
 /* Firefox */
-input[type=number] {
+.input-signup[type=number] {
   -moz-appearance: textfield;
 }
