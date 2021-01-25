@@ -13,10 +13,10 @@
   }
 
 .column-left {
-    width: 25%;
+    width: 24%;
     height: 100%;
     float: left;
-    background-color: rosybrown;
+    background-color: #f6f5f7;
     border-collapse: collapse;
 }
 
@@ -29,7 +29,7 @@
 }
 
 .column-right {
-  width: 25%;
+  width: 24%;
   height: 100%;
   position: relative;
   float: right;
@@ -38,11 +38,20 @@
 }
 
 .input-an {
-	background-color: #eee;
+	background-color: #fff;
 	border: none;
     padding: 12px 15px;
     margin: 8px 0;
     margin-bottom: 20px;
+	width: 75%;
+}
+
+.input-pl {
+	background-color: #fff;
+	border: none;
+    padding: 12px 15px;
+    margin: 8px 0;
+    margin-top: 50px;
 	width: 75%;
 }
 
@@ -57,9 +66,80 @@
 	letter-spacing: 1px;
 	text-transform: uppercase;
     transition: transform 80ms ease-in;
-    margin-bottom: 50px;;
+    margin-top: 25px;
+    margin-bottom: 50px;
+}
+
+.bouton-pl {
+	border-radius: 20px;
+	border: 1px solid #FF4B2B;
+	background-color: #FF4B2B;
+	color: #FFFFFF;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 12px 45px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+    transition: transform 80ms ease-in;
+    margin-top: 25px;
 }
 
 .title-video {
     padding-left: 10px;
+}
+
+.ul-an {
+    margin: 0%;
+    padding:0%;
+}
+
+.li-an {
+    margin: 10px;
+    padding: 20px;
+    display: grid;
+    background-color: white;
+    font-size: 20px;
+    grid-gap: 10px;
+    border-radius: 20px;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.li-an:hover {
+    border-radius: 20px;
+    background-color:#70C1B3;
+}
+
+.h1-an {
+    margin-bottom: 40px;
+}
+
+.hr-vert {
+    width: 1px; 
+    height: 98%; 
+    background: black; 
+    border: none;
+}
+
+.hr-hori {
+    margin-left: 8px;
+    margin-bottom: 40px;
+    height: 1px;
+    background: black;
+    border: none;
+}
+
+.hr-detail {
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-bottom: 40px;
+    height: 1px;
+    background: black;
+    border: none;
+}
+
+.sep1 {
+    width: 1%;
+    height: 100vh;
+    float: left;
 }

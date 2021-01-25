@@ -3,7 +3,8 @@ import React from "react";
 const VideoDetail = ({ video }) => {
   if (!video) {
     return <div>
-       <h1>Ajoutez une vidéo :</h1>
+       <h1 className="h1-an">Ajoutez une vidéo :</h1>
+       <hr className="hr-detail"/>
     </div>;
   }
 
@@ -23,6 +24,7 @@ const VideoDetail = ({ video }) => {
         <form onSubmit={handleSubmit}>
           <input type='submit' className='bouton-an' value="Ajouter"/>
         </form>
+        <hr className="hr-detail"/>
       </div>
     </div>
   );

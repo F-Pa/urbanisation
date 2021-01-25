@@ -80,7 +80,6 @@ const Login = ({ setToken }) => {
         }
       })
       .catch(error => {
-          console.log(error);
           setLoginError(error.response.data.message);
       });
 
