@@ -1,47 +1,48 @@
 import React from 'react';
-import SearchBar from './Searchbar';
-import youtube from '../youtubeApi/youtube';
-import VideoList from './VideoList';
-import VideoDetail from './VideoDetail';
 
-class Annonceur extends React.Component {
-    state = {
-        videos: [],
-        selectedVideo: null
-    }
-    handleSubmit = async (termFromSearchBar) => {
-        const response = await youtube.get('/search', {
-            params: {
-                q: termFromSearchBar
-            }
-        })
+import '../style/annonceur.css'
 
-        this.setState({
-            videos: response.data.items
-        })
-        console.log("this is resp",response);
-    };
-    handleVideoSelect = (video) => {
-        this.setState({selectedVideo: video})
-    }
-
-    render() {
-        return (
-            <div className='ui container' style={{marginTop: '1em'}}>
-                <SearchBar handleFormSubmit={this.handleSubmit}/>
-                <div className='ui grid'>
-                    <div className="ui row">
-                        <div className="eleven wide column">
-                            <VideoDetail video={this.state.selectedVideo}/>
-                        </div>
-                        <div className="five wide column">
-                            <VideoList handleVideoSelect={this.handleVideoSelect} videos={this.state.videos}/>
-                        </div>
-                    </div>
+const Annonceur = () => {
+    return(
+        <div class="body-ut">
+            <div class="row-ut">
+                <div class="column-left-ut">
+                    <h1>Vos Annonces :</h1>
+                    <hr className="hr-hori"/>
+                    <p>annonce 1</p>
+                    {/* <button >Supprimer</button> */}
                 </div>
-            </div>
-        )
-    }
+                <div className="sep1">
+                        <hr className="hr-vert"/>
+                </div>
+                <div class="column-right-ut">
+                    <h1> Ajouter une annonce</h1>
+                    <hr className="hr-hori"/>
+                    <form className="form-ut" action="" method="get" class="annonce">
+                        <div className="annonce">
+                            <label className="label-ut" for="name">Nom de l'annonce: </label>
+                            <input className="input-ut" type="text" name="name" id="name"/>
+                        </div>
+                        <div className="annonce">
+                            <label className="label-ut" for="category">Categorie: </label>
+                            <select name="category" size="1">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>
+                        <div className="annonce">
+                            <label className="label-ut" for="description">Description: </label>
+                            <textarea id="description" name="description"></textarea>
+                        </div>
+                        <div className="annonce">
+                            <input className="bouton-ul" type="submit" value="Créer"/>
+                        </div>
+                    </form> 
+                </div>
+            </div> 
+        </div>
+    )
 }
 
-export default Annonceur;
+export default Annonceur

@@ -55,6 +55,14 @@
 	width: 75%;
 }
 
+.input-ca {
+	background-color: #fff;
+	border: none;
+    padding: 12px 15px;
+    margin: 8px 0;
+	width: 75%;
+}
+
 .bouton-an {
 	border-radius: 20px;
 	border: 1px solid #FF4B2B;
@@ -93,9 +101,11 @@
     padding:0%;
 }
 
-.li-an {
+.but-an {
     margin: 10px;
+    margin-left: 50px;
     padding: 20px;
+    width: 75%;
     display: grid;
     background-color: white;
     font-size: 20px;
@@ -105,7 +115,25 @@
     cursor: pointer;
 }
 
-.li-an:hover {
+.vid-an {
+    margin: 10px;
+    margin-left: 50px;
+    padding: 20px;
+    width: 75%;
+    display: grid;
+    background-color: white;
+    font-size: 20px;
+    grid-gap: 10px;
+    border-radius: 20px;
+    border: 1px solid transparent;
+}
+
+.but-an:hover {
+    border-radius: 20px;
+    background-color:#70C1B3;
+}
+
+.but-an:focus {
     border-radius: 20px;
     background-color:#70C1B3;
 }

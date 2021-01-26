@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import useToken from './authentification/useToken';
 
 import Login from './Login';
-import Test from './annonceur/Test';
+import Utilisateur from './utilisateur/Utilisateur';
 import Annonceur from './annonceur/Annonceur';
 
 import './style/App.css';
@@ -22,7 +22,7 @@ function App(props) {
       <Switch>
         <Route path="/" exact component={Home}/>
         <Route path="/Login" component={Login}/>
-        <Route path="/Test" component={Test}/>
+        <Route path="/Utilisateur" component={Utilisateur}/>
         <Route path="/Annonceur" component={Annonceur}/>
       </Switch>
     </div>

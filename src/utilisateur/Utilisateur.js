@@ -14,14 +14,17 @@ function getToken() {
     return userToken?.token
 };
 
-class Test extends React.Component {
+class Utilisateur extends React.Component {
     
     state = {
         nomP: '',
         nomPError: '',
+        videoError: '',
         videos: [],
         selectedVideo: null,
+        titlePlaylist: '',
         playlist: [],
+        videoList: [],
         token: getToken()
     }
 
@@ -67,7 +70,7 @@ class Test extends React.Component {
 
         const playlistBack = {
             nom: this.state.nomP,
-            user_id: this.state.token
+            user_id: this.state.token,
         }
 
         this.setState({nomPError: ''});
@@ -75,7 +78,7 @@ class Test extends React.Component {
         axios.post('http://localhost:4000/app/playlist', playlistBack)
         .then(result => {
           if(result.status === 200) {
-            console.log('ok');
+            console.log('playlist ajoutée');
           }
         })
         .catch(function (error) {
@@ -83,8 +86,31 @@ class Test extends React.Component {
         }.bind(this))
 
         window.location.reload();
-        window.location.reload();
 
+    }
+
+    handleVideoPrint = (item) => {
+        this.setState({ titlePlaylist: item});
+        this.setState({ focused: true });
+
+        const video_id = {
+            user_id: getToken(),
+            playlist_name: item
+        };
+
+        this.setState({videoError: ''});
+    
+        axios.post('http://localhost:4000/app/getVideo', video_id)
+        .then(function(result) {
+          if(result.status === 200) {
+            this.setState({videoList: result.data});
+          }
+        }.bind(this))
+        .catch(function (error) {
+            console.log(error);
+            this.setState({videoError: error.response.data.message});
+        }.bind(this))
+        
     }
 
     render() {
@@ -96,7 +122,13 @@ class Test extends React.Component {
                         <hr className="hr-hori"/>
                         <ul className="ul-an">
                             {this.state.playlist.map(item => {
-                                return <li key={item} className="li-an">{item}</li>;
+                                return <input 
+                                            type='submit'
+                                            key={item} 
+                                            className="but-an"
+                                            value={item}
+                                            onClick={() => this.handleVideoPrint(item)}
+                                        />;
                             })}
                         </ul>
                         <form onSubmit={this.handlePlaylist}>
@@ -107,6 +139,14 @@ class Test extends React.Component {
                                 value={this.nomP}
                                 onChange={this.handleNomP}
                             />
+                            <select required className="input-ca" name="category" size="1">
+                                <option value=""hidden>Catégorie de la playlist</option>
+                                <option value="Meca">Mécanique</option>
+                                <option value="Jeux">Jeux-vidéo</option>
+                                <option value="Musique">Musique</option>
+                                <option value="Podcast">Podcast</option>
+                                <option value="Short">Court-métrage</option>
+                            </select>
                             <input type='submit' className='bouton-pl' value="Nouvelle Playlist"/>
                             {this.state.nomPError && <p style={{color: 'red'}}>{this.state.nomPError}</p>}
                         </form>
@@ -115,9 +155,15 @@ class Test extends React.Component {
                         <hr className="hr-vert"/>
                     </div>
                     <div className="column-center">
-                        <h1 className="h1-an">Les vidéos de </h1>
+                        <h1 className="h1-an">Les vidéos de {this.state.titlePlaylist}</h1>
                         <hr className="hr-hori"/>
-                        <p>Some text..</p>
+                        <ul className="ul-an">
+                            {this.state.videoError && <p>{this.state.videoError}</p>}
+                            {this.state.videoList.map(item => {
+                                console.log(item);
+                                return <li className="vid-an" key={item}> {item} </li>;
+                            })}
+                        </ul>
                     </div>
                     <div className="sep1">
                         <hr className="hr-vert"/>
@@ -127,7 +173,7 @@ class Test extends React.Component {
                             <div className='ui grid'>
                                 <div className="ui row">
                                     <div className="eleven wide column">
-                                        <VideoDetail video={this.state.selectedVideo}/>
+                                        <VideoDetail video={this.state.selectedVideo} nomPlay={this.state.titlePlaylist}/>
                                     </div>
                                     <SearchBar handleFormSubmit={this.handleSubmit}/>
                                     <div className="five wide column">
@@ -143,4 +189,4 @@ class Test extends React.Component {
     }
 }
 
-export default Test;
+export default Utilisateur;

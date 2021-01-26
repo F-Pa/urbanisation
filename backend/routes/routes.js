@@ -4,6 +4,7 @@ const assert = require('assert');
 
 const User = require('../models/UsersModels')
 const Playlist = require('../models/PlaylistModels')
+const Video = require('../models/VideoModels')
 
 const router = express.Router()
 
@@ -98,11 +99,9 @@ router.post('/playlist', (req, res) => {
     Playlist.exists({ nom: req.body.nom, user_id: req.body.user_id }, function (err, users) {
         if(err) return console.log(err);
         if(users){
-            console.log('paiehu ');
             return res.status(403).json({status: 'error', message: 'Une playlist est déjà nommée ainsi'});
         }
         else{
-            console.log('iav');
             playlist.save()
                 .then(data => {
                     res.json(data)
@@ -123,6 +122,49 @@ router.post('/getPlaylist', (req, res) => {
             play.push(call[i].nom);
         }
         return res.json(play);
+    })
+})
+
+router.post('/video', (req, res) => {
+
+    const video = new Video({
+        nom: req.body.nom, 
+        user_id: req.body.user_id,
+        playlist_name: req.body.playlist_name
+    })
+
+    Video.exists({ nom: req.body.nom, user_id: req.body.user_id, playlist_name: req.body.playlist_name }, function (err, users) {
+        if(err) return console.log(err);
+        if(users){
+            return res.status(403).json({status: 'error', message: 'La vidéo est déjà dans votre playlist'});
+        }
+        else{
+            video.save()
+                .then(data => {
+                    res.json(data)
+                })
+                .catch(error => {
+                    console.log(error);
+                    res.json(error)
+                })
+        }
+    })
+})
+
+router.post('/getVideo', (req, res) => {
+    Video.find({user_id: req.body.user_id, playlist_name: req.body.playlist_name}, function(err, call) {
+        if(err) return console.log(err);
+        try {
+            assert.notStrictEqual(0, call.length, 'Aucune vidéo dans cette playlist');
+        }
+        catch (bodyError) {
+            return res.status(403).json({status: 'error', message: bodyError.message});
+        }
+        const videop = [];
+        for(const i in call) {
+            videop.push(call[i].nom);
+        }
+        return res.json(videop);
     })
 })
 

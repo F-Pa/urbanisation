@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const playlistTemplate = new mongoose.Schema({
+const videoTemplate = new mongoose.Schema({
     nom:{
         type:String,
         required:true
@@ -10,10 +10,10 @@ const playlistTemplate = new mongoose.Schema({
         ref: 'Utilisateur',
         required:true
     },
-    category:{
+    playlist_name:{
         type:String,
         required:true
     }
 })
 
-module.exports = Playlist = mongoose.model('Playlist', playlistTemplate)
+module.exports = Video = mongoose.model('Video', videoTemplate)
