@@ -25,7 +25,9 @@ class Utilisateur extends React.Component {
         titlePlaylist: '',
         playlist: [],
         videoList: [],
-        token: getToken()
+        annonce: '',
+        token: getToken(),
+        selectValue: ''
     }
 
     componentWillMount() {
@@ -71,15 +73,16 @@ class Utilisateur extends React.Component {
         const playlistBack = {
             nom: this.state.nomP,
             user_id: this.state.token,
+            category: this.state.value
         }
 
         this.setState({nomPError: ''});
 
         axios.post('http://localhost:4000/app/playlist', playlistBack)
         .then(result => {
-          if(result.status === 200) {
+            if(result.status === 200) {
             console.log('playlist ajoutée');
-          }
+            }
         })
         .catch(function (error) {
             this.setState({nomPError: error.response.data.message});
@@ -110,7 +113,22 @@ class Utilisateur extends React.Component {
             console.log(error);
             this.setState({videoError: error.response.data.message});
         }.bind(this))
+
+            
+        axios.post('http://localhost:4000/app/getPub', video_id)
+        .then(function(result) {
+          if(result.status === 200) {
+            this.setState({annonce: result.data});
+          }
+        }.bind(this))
+        .catch(function (error) {
+            console.log(error);
+        }.bind(this))
         
+    }
+
+    handleSelect = (e) => {
+        this.setState({value: e.target.value});
     }
 
     render() {
@@ -133,13 +151,14 @@ class Utilisateur extends React.Component {
                         </ul>
                         <form onSubmit={this.handlePlaylist}>
                             <input
+                                required
                                 className="input-pl"
                                 type='text'
                                 placeholder='Nom de la Playlist'
                                 value={this.nomP}
                                 onChange={this.handleNomP}
                             />
-                            <select required className="input-ca" name="category" size="1">
+                            <select onChange={this.handleSelect} required className="input-ca" name="category" size="1">
                                 <option value=""hidden>Catégorie de la playlist</option>
                                 <option value="Meca">Mécanique</option>
                                 <option value="Jeux">Jeux-vidéo</option>
@@ -148,6 +167,9 @@ class Utilisateur extends React.Component {
                                 <option value="Short">Court-métrage</option>
                             </select>
                             <input type='submit' className='bouton-pl' value="Nouvelle Playlist"/>
+                            <div className="div-a">
+                                <a className="a-ut" href="./Annonceur">Vous êtes un Annonceur ?</a>
+                            </div>
                             {this.state.nomPError && <p style={{color: 'red'}}>{this.state.nomPError}</p>}
                         </form>
                     </div>
@@ -164,6 +186,7 @@ class Utilisateur extends React.Component {
                                 return <li className="vid-an" key={item}> {item} </li>;
                             })}
                         </ul>
+                        {this.state.annonce && <p>Annonce : {this.state.annonce}</p>}
                     </div>
                     <div className="sep1">
                         <hr className="hr-vert"/>

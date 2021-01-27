@@ -16,11 +16,13 @@ function App(props) {
     return <Login setToken={setToken} />
   }
 
+  console.log(token);
+
   return (
     <Router>
     <div className="App">
       <Switch>
-        <Route path="/" exact component={Home}/>
+        <Route path="/" exact component={Utilisateur}/>
         <Route path="/Login" component={Login}/>
         <Route path="/Utilisateur" component={Utilisateur}/>
         <Route path="/Annonceur" component={Annonceur}/>

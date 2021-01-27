@@ -76,7 +76,7 @@ const Login = ({ setToken }) => {
       .then(res => {
         if(res.status === 200) {
           console.log(res.data);
-          setToken(res.data)
+          setToken(res.data);
         }
       })
       .catch(error => {
@@ -113,7 +113,7 @@ const Login = ({ setToken }) => {
               <div className="card">
                 <label className="radio">
                   <input
-                      className="input-signup"
+                    className="input-signup"
                     type='radio'
                     name='role'
                     id='one'
@@ -123,7 +123,7 @@ const Login = ({ setToken }) => {
                 </label>
                 <label className="radio">
                   <input
-                      className="input-signup"
+                    className="input-signup"
                     type='radio'
                     name='role'
                     id='two'
@@ -215,7 +215,7 @@ const Login = ({ setToken }) => {
 }
 
 Login.propTypes = {
-  setToken: PropTypes.func.isRequired
+  setToken: PropTypes.func.isRequired,
 }
 
 export default Login

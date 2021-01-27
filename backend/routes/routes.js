@@ -5,6 +5,7 @@ const assert = require('assert');
 const User = require('../models/UsersModels')
 const Playlist = require('../models/PlaylistModels')
 const Video = require('../models/VideoModels')
+const Annonce = require('../models/AnnonceModels')
 
 const router = express.Router()
 
@@ -46,7 +47,8 @@ router.post('/signup', async(req, res) => {
                 .catch(error => {
                     res.json(error)
                 })
-            return res.json({token: 'test2'})
+            console.log(user);
+            return res.json({token: user._id})
         }
     })
 })
@@ -68,7 +70,7 @@ router.post('/signin', (req, res) => {
                 bcrypt.compare(req.body.passwordLogin, call.password, function(err, match) {
                     if(err) return res.status(500).json({status: 'error', message: 'Authentification échouée'});
                     if(match) {
-                        console.log(call._id);
+                        console.log(call);
                         return res.json({token : call._id});
                     }
                     else {
@@ -93,7 +95,8 @@ router.post('/playlist', (req, res) => {
 
     const playlist = new Playlist({
         nom: req.body.nom, 
-        user_id: req.body.user_id
+        user_id: req.body.user_id,
+        category: req.body.category
     })
 
     Playlist.exists({ nom: req.body.nom, user_id: req.body.user_id }, function (err, users) {
@@ -165,6 +168,76 @@ router.post('/getVideo', (req, res) => {
             videop.push(call[i].nom);
         }
         return res.json(videop);
+    })
+})
+
+router.post('/annonce', (req, res) => {
+    try {
+        assert.notStrictEqual("", req.body.nom, 'Veuillez spécifier le nom de l\'annonce');
+    }
+    catch (bodyError) {
+        return res.status(403).json({status: 'error', message: bodyError.message});
+    }
+
+    const annonce = new Annonce({
+        nom: req.body.nom, 
+        user_id: req.body.user_id,
+        category: req.body.category,
+        description: req.body.description
+    })
+
+    Annonce.exists({ nom: req.body.nom, user_id: req.body.user_id }, function (err, users) {
+        if(err) return console.log(err);
+        if(users){
+            return res.status(403).json({status: 'error', message: 'Une annonce est déjà nommée ainsi'});
+        }
+        else{
+            annonce.save()
+                .then(data => {
+                    res.json(data)
+                })
+                .catch(error => {
+                    console.log(error);
+                    res.json(error)
+                })
+        }
+    })
+})
+
+router.post('/getAnnonce', (req, res) => {
+    Annonce.find({user_id: req.body.user_id}, function(err, call) {
+        if(err) return console.log(err);
+        const an = [];
+        for(const i in call) {
+            an.push(call[i].nom + ' : ' + call[i].description);
+        }
+        return res.json(an);
+    })
+})
+
+router.post('/countCategorie', (req,res) => {
+    Playlist.find({category: req.body.catBack}, function(err, call) {
+        if(err) return console.log(err);
+        const an = [call.length, req.body.catBack];
+        return res.json(an)
+    })
+})
+
+router.post('/getPub', (req, res) => {
+    Playlist.find({nom: req.body.playlist_name}, function(err, call) {
+        if(err) return console.log(err);
+        console.log('ici' + call[0].category);
+        Annonce.findOne({category: call[0].category}, function(err, call) {
+            console.log(call);
+            try {
+                assert.notStrictEqual(0, call.length, 'Aucune annonce pour cette catégorie');
+            }
+            catch (bodyError) {
+                return res.status(403).json({status: 'error', message: bodyError.message});
+            }
+            console.log(call);
+            return res.json(call.description);
+        })
     })
 })
 
